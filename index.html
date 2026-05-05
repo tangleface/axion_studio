@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axion Studio — Strategy. Innovation. Industry.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'display': ['Space Grotesk', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'axion': {
+                            'black': '#0a0a0a',
+                            'dark': '#111111',
+                            'charcoal': '#1a1a1a',
+                            'gray': '#2a2a2a',
+                            'light': '#e5e5e5',
+                            'white': '#f5f5f5',
+                            'accent': '#c9a96e',
+                            'accent-light': '#ddb97a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #f5f5f5 0%, #c9a96e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .accent-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #c9a96e, transparent);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        
+        .card-luxury {
+            background: linear-gradient(145deg, #111111 0%, #1a1a1a 100%);
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .card-luxury:hover {
+            border-color: rgba(201, 169, 110, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(201, 169, 110, 0.05);
+        }
+        
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            background: #2a2a2a;
+        }
+        
+        .pillar-item {
+            background: #111111;
+            padding: 3rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pillar-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #c9a96e, transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .pillar-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .pillar-item:hover {
+            background: #1a1a1a;
+        }
+        
+        .number-display {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 6rem;
+            font-weight: 300;
+            color: rgba(201, 169, 110, 0.15);
+            line-height: 1;
+        }
+        
+        .process-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+            opacity: 0.3;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #c9a96e 0%, #a88b55 100%);
+            color: #0a0a0a;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 110, 0.3);
+        }
+        
+        .btn-outline {
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            color: #c9a96e;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(201, 169, 110, 0.1);
+            border-color: #c9a96e;
+        }
+        
+        .quote-mark {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 8rem;
+            line-height: 0.5;
+            color: rgba(201, 169, 110, 0.1);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.5;
+        }
+        
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, #c9a96e, transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes scrollPulse {
+            0%, 100% { transform: scaleY(1); opacity: 0.5; }
+            50% { transform: scaleY(0.5); opacity: 1; }
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            color: #c9a96e;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="font-body antialiased">
+
+    <!-- Grain Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <a href="#accueil" class="flex items-center gap-3">
+                    <div class="w-10 h-10 border border-axion-accent/30 flex items-center justify-center">
+                        <span class="font-display text-axion-accent text-xl font-bold">A</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display text-lg tracking-widest text-white">AXION</span>
+                        <span class="font-display text-[0.6rem] tracking-[0.3em] text-axion-accent -mt-1">STUDIO</span>
+                    </div>
+                </a>
+                
+                <div class="hidden lg:flex items-center gap-10">
+                    <a href="#vision" class="text-axion-light/70 hover:text-white text-sm tracking-widest uppercase transition-colors">Vision</a>
+                    <a href="#expertise" class="text-axion-light/70 hover:text-white text-sm tracking-widest uppercase transition-colors">Expertise</a>
+                    <a href="#digital-twin" class="text-axion-light/70 hover:text-white text-sm tracking-widest uppercase transition-colors">Digital Twin</a>
+                    <a href="#approach" class="text-axion-light/70 hover:text-white text-sm tracking-widest uppercase transition-colors">Approche</a>
+                    <a href="#contact" class="btn-primary px-6 py-2.5 text-sm font-semibold tracking-wider uppercase">Nous contacter</a>
+                </div>
+                
+                <button id="mobile-menu-btn" class="lg:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden nav-blur absolute w-full border-t border-white/10">
+            <div class="px-6 py-8 space-y-6">
+                <a href="#vision" class="block text-white text-lg tracking-widest uppercase">Vision</a>
+                <a href="#expertise" class="block text-white text-lg tracking-widest uppercase">Expertise</a>
+                <a href="#digital-twin" class="block text-white text-lg tracking-widest uppercase">Digital Twin</a>
+                <a href="#approach" class="block text-white text-lg tracking-widest uppercase">Approche</a>
+                <a href="#contact" class="block btn-primary text-center py-3 text-sm font-semibold tracking-wider uppercase mt-4">Nous contacter</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="relative min-h-screen flex items-center hero-gradient overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-axion-accent/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-axion-accent/5 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pt-32 pb-20">
+            <div class="max-w-4xl">
+                <div class="reveal">
+                    <span class="tag mb-8 inline-block">Strategy · Innovation · Industry</span>
+                </div>
+                
+                <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mb-8 reveal stagger-1">
+                    Designing<br>
+                    what's <span class="text-gradient italic">next</span>
+                </h1>
+                
+                <p class="text-axion-light/60 text-lg md:text-xl max-w-2xl leading-relaxed mb-12 reveal stagger-2">
+                    Axion Studio est un studio de stratégie, d'innovation et de transformation 
+                    technologique, conçu pour accompagner les organisations dans une nouvelle 
+                    génération de performance.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 reveal stagger-3">
+                    <a href="#vision" class="btn-primary px-8 py-4 text-sm font-semibold tracking-wider uppercase inline-flex items-center gap-3">
+                        Découvrir notre vision
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="#digital-twin" class="btn-outline px-8 py-4 text-sm font-semibold tracking-wider uppercase">
+                        Le Digital Twin
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span class="text-[0.65rem] tracking-[0.3em] uppercase text-axion-accent">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Vision Statement -->
+    <section id="vision" class="py-32 bg-axion-dark relative">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
+            <div class="reveal">
+                <div class="accent-line mb-8"></div>
+                <p class="font-display text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-axion-light/90">
+                    Le futur des organisations ne se pilote plus uniquement sur le <span class="text-white">passé</span>. 
+                    Il se pilote aussi dans leur capacité à <span class="text-gradient">voir</span>, 
+                    <span class="text-gradient">comprendre</span>, 
+                    <span class="text-gradient">modéliser</span> et 
+                    <span class="text-gradient">anticiper</span>.
+                </p>
+            </div>
+            
+            <div class="mt-16 grid md:grid-cols-2 gap-12 reveal">
+                <p class="text-axion-light/50 leading-relaxed">
+                    Aujourd'hui, la complexité des opérations, des infrastructures et des environnements 
+                    techniques impose une nouvelle manière de piloter. Les organisations les plus 
+                    performantes sont celles qui ne se contentent plus d'agir, mais qui savent aussi 
+                    visualiser, analyser et projeter leur réalité de manière intelligente.
+                </p>
+                <p class="text-axion-light/50 leading-relaxed">
+                    Nous sommes à un moment charnière. La digitalisation seule ne suffit plus. 
+                    Les organisations doivent désormais passer à une logique plus avancée : centraliser 
+                    leurs données, modéliser leurs environnements, visualiser leurs actifs, et créer 
+                    des capacités d'analyse et de décision en temps réel.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Are -->
+    <section class="py-32 bg-axion-black relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-5">
+            <div class="w-full h-full" style="background-image: radial-gradient(circle at 2px 2px, rgba(201,169,110,0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <span class="tag mb-6 inline-block">Who We Are</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-light mb-8">
+                        A strategic and<br>
+                        <span class="text-gradient">innovation-driven</span> studio
+                    </h2>
+                    <p class="text-axion-light/60 leading-relaxed mb-6">
+                        Axion Studio est une structure hybride qui réunit des expertises souvent séparées : 
+                        la stratégie, la communication, la conception digitale, le développement de solutions 
+                        et l'innovation appliquée.
+                    </p>
+                    <p class="text-axion-light/60 leading-relaxed">
+                        Notre rôle est de transformer des besoins complexes en systèmes clairs, utiles et 
+                        performants. Nous ne construisons pas de simples outils digitaux. Nous concevons des 
+                        systèmes capables d'aider les organisations à mieux comprendre leurs environnements, 
+                        mieux piloter leurs opérations et mieux préparer leurs décisions.
+                    </p>
+                </div>
+                
+                <div class="reveal">
+                    <div class="relative">
+                        <div class="aspect-[4/5] bg-gradient-to-br from-axion-charcoal to-axion-gray rounded-sm overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" 
+                                 alt="Axion Studio Workspace" 
+                                 class="w-full h-full object-cover opacity-60 mix-blend-luminosity hover:opacity-80 transition-opacity duration-700">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 w-32 h-32 border border-axion-accent/20"></div>
+                        <div class="absolute -top-6 -right-6 w-32 h-32 border border-axion-accent/20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Pillars -->
+    <section id="expertise" class="py-32 bg-axion-dark">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mb-20 reveal">
+                <span class="tag mb-6 inline-block">Our Expertise</span>
+                <h2 class="font-display text-4xl md:text-5xl font-light">
+                    Four strategic <span class="text-gradient">pillars</span>
+                </h2>
+                <p class="text-axion-light/50 mt-6 max-w-2xl">
+                    Notre expertise est structurée autour de quatre piliers complémentaires. 
+                    Cette approche nous permet de traiter à la fois la vision, l'expérience, 
+                    la technologie et la performance opérationnelle.
+                </p>
+            </div>
+            
+            <div class="pillars-grid reveal">
+                <div class="pillar-item group">
+                    <div class="number-display">01</div>
+                    <h3 class="font-display text-2xl font-medium text-white mt-4 mb-4 group-hover:text-axion-accent transition-colors">
+                        Strategy &<br>Transformation
+                    </h3>
+                    <p class="text-axion-light/50 text-sm leading-relaxed">
+                        Accompagnement stratégique et transformation organisationnelle pour 
+                        préparer l'avenir et structurer la croissance.
+                    </p>
+                </div>
+                
+                <div class="pillar-item group">
+                    <div class="number-display">02</div>
+                    <h3 class="font-display text-2xl font-medium text-white mt-4 mb-4 group-hover:text-axion-accent transition-colors">
+                        Communication &<br>Experience
+                    </h3>
+                    <p class="text-axion-light/50 text-sm leading-relaxed">
+                        Conception d'expériences et de dispositifs de communication qui 
+                        traduisent la stratégie en interactions concrètes.
+                    </p>
+                </div>
+                
+                <div class="pillar-item group">
+                    <div class="number-display">03</div>
+                    <h3 class="font-display text-2xl font-medium text-white mt-4 mb-4 group-hover:text-axion-accent transition-colors">
+                        Industry<br>4.0
+                    </h3>
+                    <p class="text-axion-light/50 text-sm leading-relaxed">
+                        Relier les environnements physiques aux systèmes digitaux pour mieux 
+                        observer, comprendre, centraliser, analyser et optimiser.
+                    </p>
+                </div>
+                
+                <div class="pillar-item group">
+                    <div class="number-display">04</div>
+                    <h3 class="font-display text-2xl font-medium text-white mt-4 mb-4 group-hover:text-axion-accent transition-colors">
+                        Platforms &<br>Digital Solutions
+                    </h3>
+                    <p class="text-axion-light/50 text-sm leading-relaxed">
+                        Développement de plateformes et solutions digitales sur mesure, 
+                        conçues pour durer et évoluer.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Twin Section -->
+    <section id="digital-twin" class="py-32 bg-axion-black relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&q=80" 
+                 alt="Digital Twin Visualization" 
+                 class="w-full h-full object-cover opacity-20">
+            <div class="absolute inset-0 bg-gradient-to-r from-axion-black via-axion-black/95 to-axion-black/80"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <span class="tag mb-6 inline-block">Industry 4.0</span>
+                    <h2 class="font-display text-4xl md:text-6xl font-light mb-8">
+                        Digital<br>
+                        <span class="text-gradient">Twin</span>
+                    </h2>
+                    <p class="text-axion-light/70 text-lg leading-relaxed mb-6">
+                        Au cœur de notre proposition de valeur se trouve une expertise particulièrement 
+                        différenciante : le jumeau numérique.
+                    </p>
+                    <p class="text-axion-light/50 leading-relaxed mb-8">
+                        Un jumeau numérique ne se limite pas à une représentation visuelle. C'est une 
+                        interface intelligente qui permet de visualiser un site, un actif, un système 
+                        ou une infrastructure, et d'y associer des données, des informations, des flux 
+                        et des capacités d'analyse.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 bg-axion-accent rounded-full"></div>
+                            <span class="text-axion-light/70">Visualiser les actifs en temps réel</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 bg-axion-accent rounded-full"></div>
+                            <span class="text-axion-light/70">Centraliser les informations</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 bg-axion-accent rounded-full"></div>
+                            <span class="text-axion-light/70">Suivre les opérations</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 bg-axion-accent rounded-full"></div>
+                            <span class="text-axion-light/70">Analyser les performances</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 bg-axion-accent rounded-full"></div>
+                            <span class="text-axion-light/70">Simuler des scénarios</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 bg-axion-accent rounded-full"></div>
+                            <span class="text-axion-light/70">Optimiser les décisions</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <div class="relative">
+                        <div class="aspect-square bg-gradient-to-br from-axion-charcoal to-transparent rounded-sm border border-white/5 p-8">
+                            <div class="h-full flex flex-col justify-between">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-axion-accent text-sm tracking-widest uppercase mb-2">Live Model</div>
+                                        <div class="font-display text-3xl text-white">Usine Nord</div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                                        <span class="text-xs text-green-500">Online</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="bg-white/5 p-4 rounded">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-xs text-axion-light/50">Efficacité</span>
+                                            <span class="text-xs text-axion-accent">94.2%</span>
+                                        </div>
+                                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                                            <div class="h-full bg-axion-accent w-[94%] rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white/5 p-4 rounded">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-xs text-axion-light/50">Maintenance</span>
+                                            <span class="text-xs text-axion-accent">Préventive</span>
+                                        </div>
+                                        <div class="flex gap-2 mt-2">
+                                            <div class="h-8 flex-1 bg-axion-accent/20 rounded"></div>
+                                            <div class="h-8 flex-1 bg-axion-accent/40 rounded"></div>
+                                            <div class="h-8 flex-1 bg-axion-accent/60 rounded"></div>
+                                            <div class="h-8 flex-1 bg-axion-accent/30 rounded"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <div class="bg-white/5 p-3 rounded text-center">
+                                            <div class="font-display text-2xl text-white">12</div>
+                                            <div class="text-[0.6rem] text-axion-light/40 uppercase tracking-wider">Capteurs</div>
+                                        </div>
+                                        <div class="bg-white/5 p-3 rounded text-center">
+                                            <div class="font-display text-2xl text-white">3</div>
+                                            <div class="text-[0.6rem] text-axion-light/40 uppercase tracking-wider">Alertes</div>
+                                        </div>
+                                        <div class="bg-white/5 p-3 rounded text-center">
+                                            <div class="font-display text-2xl text-white">98%</div>
+                                            <div class="text-[0.6rem] text-axion-light/40 uppercase tracking-wider">Uptime</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-[0.6rem] text-axion-light/30 tracking-widest uppercase">
+                                    Axion Studio Digital Twin Platform
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="py-32 bg-axion-dark">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mb-20 reveal">
+                <span class="tag mb-6 inline-block">Applications</span>
+                <h2 class="font-display text-4xl md:text-5xl font-light">
+                    High-value <span class="text-gradient">use cases</span>
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-axion-gray reveal">
+                <div class="bg-axion-dark p-8 group hover:bg-axion-charcoal transition-colors duration-500">
+                    <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center mb-6 group-hover:border-axion-accent/50 transition-colors">
+                        <svg class="w-6 h-6 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl text-white mb-3">Industry & Production</h3>
+                    <p class="text-axion-light/40 text-sm leading-relaxed">
+                        Optimisation des lignes de production, maintenance prédictive, 
+                        et pilotage en temps réel des actifs industriels.
+                    </p>
+                </div>
+                
+                <div class="bg-axion-dark p-8 group hover:bg-axion-charcoal transition-colors duration-500">
+                    <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center mb-6 group-hover:border-axion-accent/50 transition-colors">
+                        <svg class="w-6 h-6 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl text-white mb-3">Buildings & Infrastructure</h3>
+                    <p class="text-axion-light/40 text-sm leading-relaxed">
+                        Gestion intelligente du patrimoine immobilier, supervision des 
+                        infrastructures critiques, et smart buildings.
+                    </p>
+                </div>
+                
+                <div class="bg-axion-dark p-8 group hover:bg-axion-charcoal transition-colors duration-500">
+                    <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center mb-6 group-hover:border-axion-accent/50 transition-colors">
+                        <svg class="w-6 h-6 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl text-white mb-3">Energy & Technical Systems</h3>
+                    <p class="text-axion-light/40 text-sm leading-relaxed">
+                        Monitoring des réseaux énergétiques, optimisation de la consommation, 
+                        et transition énergétique pilotée par les données.
+                    </p>
+                </div>
+                
+                <div class="bg-axion-dark p-8 group hover:bg-axion-charcoal transition-colors duration-500">
+                    <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center mb-6 group-hover:border-axion-accent/50 transition-colors">
+                        <svg class="w-6 h-6 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl text-white mb-3">Cities & Territories</h3>
+                    <p class="text-axion-light/40 text-sm leading-relaxed">
+                        Urbanisme intelligent, gestion des mobilités, et pilotage des 
+                        services publics par le data.
+                    </p>
+                </div>
+                
+                <div class="bg-axion-dark p-8 group hover:bg-axion-charcoal transition-colors duration-500">
+                    <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center mb-6 group-hover:border-axion-accent/50 transition-colors">
+                        <svg class="w-6 h-6 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl text-white mb-3">Healthcare & Logistics</h3>
+                    <p class="text-axion-light/40 text-sm leading-relaxed">
+                        Traçabilité des flux, optimisation des supply chains, et pilotage 
+                        des équipements de santé connectés.
+                    </p>
+                </div>
+                
+                <div class="bg-axion-dark p-8 group hover:bg-axion-charcoal transition-colors duration-500 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="w-16 h-16 border border-axion-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:border-axion-accent transition-colors">
+                            <svg class="w-6 h-6 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                        </div>
+                        <span class="text-axion-accent text-sm tracking-widest uppercase">Et plus encore</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach -->
+    <section id="approach" class="py-32 bg-axion-black relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mb-20 reveal">
+                <span class="tag mb-6 inline-block">Our Approach</span>
+                <h2 class="font-display text-4xl md:text-5xl font-light">
+                    From understanding to <span class="text-gradient">intelligent deployment</span>
+                </h2>
+            </div>
+            
+            <div class="relative">
+                <div class="hidden lg:block process-line"></div>
+                
+                <div class="grid lg:grid-cols-5 gap-8">
+                    <div class="reveal stagger-1">
+                        <div class="card-luxury p-8 rounded-sm h-full">
+                            <div class="font-display text-5xl text-axion-accent/20 mb-4">01</div>
+                            <h3 class="font-display text-xl text-white mb-3">Diagnose</h3>
+                            <p class="text-axion-light/40 text-sm leading-relaxed">
+                                Comprendre l'environnement, les enjeux et les opportunités 
+                                de transformation.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="reveal stagger-2">
+                        <div class="card-luxury p-8 rounded-sm h-full">
+                            <div class="font-display text-5xl text-axion-accent/20 mb-4">02</div>
+                            <h3 class="font-display text-xl text-white mb-3">Frame</h3>
+                            <p class="text-axion-light/40 text-sm leading-relaxed">
+                                Cadrer la valeur attendue, définir les objectifs et structurer 
+                                le périmètre du projet.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="reveal stagger-3">
+                        <div class="card-luxury p-8 rounded-sm h-full">
+                            <div class="font-display text-5xl text-axion-accent/20 mb-4">03</div>
+                            <h3 class="font-display text-xl text-white mb-3">Model</h3>
+                            <p class="text-axion-light/40 text-sm leading-relaxed">
+                                Modéliser le système, concevoir l'architecture et créer les 
+                                premiers prototypes.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="reveal stagger-4">
+                        <div class="card-luxury p-8 rounded-sm h-full">
+                            <div class="font-display text-5xl text-axion-accent/20 mb-4">04</div>
+                            <h3 class="font-display text-xl text-white mb-3">Integrate</h3>
+                            <p class="text-axion-light/40 text-sm leading-relaxed">
+                                Intégrer les données, connecter les systèmes et déployer 
+                                la solution.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="reveal stagger-4">
+                        <div class="card-luxury p-8 rounded-sm h-full border-axion-accent/20">
+                            <div class="font-display text-5xl text-axion-accent/20 mb-4">05</div>
+                            <h3 class="font-display text-xl text-white mb-3">Operate</h3>
+                            <p class="text-axion-light/40 text-sm leading-relaxed">
+                                Accompagner l'exploitation, former les équipes et assurer 
+                                l'évolution continue.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Axion -->
+    <section class="py-32 bg-axion-dark relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-axion-accent/30 rounded-full"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-axion-accent/20 rounded-full"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-axion-accent/10 rounded-full"></div>
+        </div>
+        
+        <div class="max-w-5xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+            <div class="reveal">
+                <span class="tag mb-6 inline-block">Why Axion</span>
+                <h2 class="font-display text-4xl md:text-6xl font-light mb-12">
+                    Vision. Clarity.<br>
+                    <span class="text-gradient">Technology.</span> Execution. Impact.
+                </h2>
+            </div>
+            
+            <div class="reveal">
+                <p class="text-axion-light/60 text-xl leading-relaxed max-w-3xl mx-auto mb-12">
+                    Ce qui nous différencie, c'est notre capacité à relier la vision, la technologie 
+                    et l'exécution. Nous savons transformer une technologie complexe en solution 
+                    claire, utile et déployable.
+                </p>
+                
+                <a href="#contact" class="btn-primary px-10 py-4 text-sm font-semibold tracking-wider uppercase inline-flex items-center gap-3">
+                    Démarrer un projet
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-32 bg-axion-black relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div class="reveal">
+                    <span class="tag mb-6 inline-block">Contact</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-light mb-8">
+                        Construisons les <span class="text-gradient">systèmes intelligents</span> de demain
+                    </h2>
+                    <p class="text-axion-light/50 leading-relaxed mb-12">
+                        Axion Studio s'adresse aux organisations qui veulent dépasser la simple 
+                        digitalisation pour entrer dans une logique plus avancée de modélisation, 
+                        de pilotage, de performance et d'intelligence opérationnelle.
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-axion-light/40 text-sm mb-1">Email</div>
+                                <div class="text-white font-display text-lg">contact@axionstudio.fr</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-axion-light/40 text-sm mb-1">Adresse</div>
+                                <div class="text-white font-display text-lg">Paris, France</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 border border-axion-accent/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-axion-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-axion-light/40 text-sm mb-1">Réseaux</div>
+                                <div class="flex gap-4 mt-2">
+                                    <a href="#" class="text-axion-light/60 hover:text-axion-accent transition-colors">LinkedIn</a>
+                                    <a href="#" class="text-axion-light/60 hover:text-axion-accent transition-colors">Twitter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <form id="contact-form" class="card-luxury p-8 md:p-10 rounded-sm">
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-axion-light/40 text-sm mb-2 uppercase tracking-wider">Nom</label>
+                                <input type="text" class="w-full bg-transparent border-b border-axion-gray focus:border-axion-accent py-3 text-white outline-none transition-colors" placeholder="Votre nom">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-axion-light/40 text-sm mb-2 uppercase tracking-wider">Email</label>
+                                <input type="email" class="w-full bg-transparent border-b border-axion-gray focus:border-axion-accent py-3 text-white outline-none transition-colors" placeholder="votre@email.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-axion-light/40 text-sm mb-2 uppercase tracking-wider">Organisation</label>
+                                <input type="text" class="w-full bg-transparent border-b border-axion-gray focus:border-axion-accent py-3 text-white outline-none transition-colors" placeholder="Votre entreprise">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-axion-light/40 text-sm mb-2 uppercase tracking-wider">Sujet</label>
+                                <select class="w-full bg-transparent border-b border-axion-gray focus:border-axion-accent py-3 text-white outline-none transition-colors">
+                                    <option value="" class="bg-axion-dark">Choisir un sujet</option>
+                                    <option value="strategy" class="bg-axion-dark">Strategy & Transformation</option>
+                                    <option value="industry" class="bg-axion-dark">Industry 4.0 / Digital Twin</option>
+                                    <option value="platform" class="bg-axion-dark">Platforms & Digital Solutions</option>
+                                    <option value="other" class="bg-axion-dark">Autre</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-axion-light/40 text-sm mb-2 uppercase tracking-wider">Message</label>
+                                <textarea rows="4" class="w-full bg-transparent border-b border-axion-gray focus:border-axion-accent py-3 text-white outline-none transition-colors resize-none" placeholder="Décrivez votre projet..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full btn-primary py-4 text-sm font-semibold tracking-wider uppercase mt-4">
+                                Envoyer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-axion-black border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 border border-axion-accent/30 flex items-center justify-center">
+                        <span class="font-display text-axion-accent text-sm font-bold">A</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display text-sm tracking-widest text-white">AXION</span>
+                        <span class="font-display text-[0.5rem] tracking-[0.3em] text-axion-accent -mt-1">STUDIO</span>
+                    </div>
+                </div>
+                
+                <div class="text-axion-light/30 text-sm">
+                    Strategy. Innovation. Industry.
+                </div>
+                
+                <div class="text-axion-light/30 text-sm">
+                     2026 Axion Studio. Tous droits réservés.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-blur', 'border-b', 'border-white/5');
+            } else {
+                navbar.classList.remove('nav-blur', 'border-b', 'border-white/5');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-8 right-8 bg-axion-accent text-axion-black px-6 py-4 rounded-sm shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-500 flex items-center gap-3 font-display';
+            notification.innerHTML = `
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <div>
+                    <div class="font-bold text-sm tracking-wider">MESSAGE ENVOYÉ</div>
+                    <div class="text-xs opacity-70">Nous vous recontacterons sous 24h.</div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-y-20', 'opacity-0');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => notification.remove(), 500);
+            }, 4000);
+            
+            this.reset();
+        });
+    </script>
+</body>
+</html>
